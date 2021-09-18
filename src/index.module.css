@@ -1,0 +1,15 @@
+.sliderValidate {
+}
+
+.sliderContainer {
+}
+
+.sliderCanvasContainer {
+	position: relative;
+}
+
+.sliderCanvasContainer .sliderCanvasSlider {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
