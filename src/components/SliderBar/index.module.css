@@ -1,0 +1,39 @@
+.track {
+	width: 100%;
+	border: 1px solid #e5e7ea;
+	box-sizing: border-box;
+	background-color: #f7f9fa;
+}
+
+.track .slider {
+	width: 42px;
+	height: 42px;
+	border: 1px solid #e5e7ea;
+	background-color: #fff;
+	box-sizing: border-box;
+	box-shadow: 1px 0px 10px #e5e7ea;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+}
+
+.track .slider::before {
+	content: '';
+	width: 14px;
+	height: 2px;
+	background-color: #000;
+	display: block;
+	border-radius: 2px;
+	transform: translate3d(5px, 0, 0);
+}
+.track .slider::after {
+	content: '';
+	width: 8px;
+	height: 8px;
+	border-top: 2px solid #000;
+	border-right: 2px solid #000;
+	display: block;
+	transform: rotateZ(45deg) translate3d(-34%, 32%, 0);
+	border-radius: 2px;
+}

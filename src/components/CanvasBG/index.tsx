@@ -1,4 +1,4 @@
-import React, { CSSProperties, FC, useCallback, useLayoutEffect, useRef } from 'react';
+import React, { FC, useCallback, useLayoutEffect, useRef, useMemo, useEffect } from 'react';
 import { drawSlider } from './util';
 
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
 	radius: number;
 	operation: 'fill' | 'clip';
 	className?: string;
-	style?: CSSProperties;
+	movedX?: number;
 }
 
 const CanvasBG: FC<Props> = ({
@@ -23,11 +23,10 @@ const CanvasBG: FC<Props> = ({
 	l,
 	radius,
 	className,
-	style,
 	operation,
+	movedX,
 }) => {
 	const ctx = useRef<CanvasRenderingContext2D | null>(null);
-
 	const addBGImage = useCallback(() => {
 		const image = new Image();
 		image.onload = () => {
@@ -49,13 +48,30 @@ const CanvasBG: FC<Props> = ({
 		addBGImage();
 	}, [addBGImage]);
 
+	const translateX = useMemo(() => {
+		if (operation === 'clip') {
+			if (movedX) {
+				return {
+					transform: `translateX(${movedX}px)`,
+				};
+			}
+			return {
+				transform: 'translateX(0)',
+				transition: 'transform .5s ease',
+			};
+		}
+		return {};
+	}, [movedX]);
+
+	useEffect(() => {}, []);
+
 	return (
 		<canvas
 			ref={(node) => {
 				ctx.current = node ? node.getContext('2d') : null;
 			}}
 			className={className}
-			style={style}
+			style={{ left: -x, ...translateX }}
 			width={width}
 			height={height}
 		/>

@@ -1,6 +1,7 @@
-import React, { FC } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import bg from './asserts/172912-1509269352c5f8.jpg';
 import CanvasBG from './components/CanvasBG';
+import SliderBar from './components/SliderBar';
 import useHollowPosition from './hooks/hollowPosition';
 import styles from './index.module.css';
 import { SliderValidateType } from './types';
@@ -18,10 +19,16 @@ const SliderValidate: FC<SliderValidateType> = ({
 	onSuccess,
 	onFail,
 }) => {
+	const [movedX, setMovedX] = useState(0);
 	const { x, y } = useHollowPosition(width, height, sliderLength, sliderRadius);
 
+	const onDrag = useCallback((dragX: number) => {
+		console.log(dragX);
+		setMovedX(dragX);
+	}, []);
+
 	return (
-		<div className={styles.sliderValidate}>
+		<div className={styles.sliderValidate} style={{ width }}>
 			<div className={styles.sliderCanvasContainer}>
 				<CanvasBG
 					width={width}
@@ -35,9 +42,6 @@ const SliderValidate: FC<SliderValidateType> = ({
 				/>
 				<CanvasBG
 					className={styles.sliderCanvasSlider}
-					style={{
-						left: -x,
-					}}
 					width={width}
 					height={height}
 					bgUrl={backgroundUrl}
@@ -46,9 +50,12 @@ const SliderValidate: FC<SliderValidateType> = ({
 					x={x}
 					y={y}
 					operation='clip'
+					movedX={movedX}
 				/>
 			</div>
-			<div className={styles.sliderContainer}></div>
+			<div className={styles.sliderContainer}>
+				<SliderBar x={movedX} targetX={x} onDrag={onDrag} />
+			</div>
 			<div className={styles.refreshIcon}></div>
 		</div>
 	);
