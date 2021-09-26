@@ -9,7 +9,7 @@
 	width: 42px;
 	height: 42px;
 	border: 1px solid #e5e7ea;
-	background-color: #fff;
+	background-color: var(--backgroundColor);
 	box-sizing: border-box;
 	box-shadow: 1px 0px 10px #e5e7ea;
 	display: flex;
@@ -22,18 +22,18 @@
 	content: '';
 	width: 14px;
 	height: 2px;
-	background-color: #000;
+	background-color: var(--arrow);
 	display: block;
 	border-radius: 2px;
-	transform: translate3d(5px, 0, 0);
+	transform: translateX(4.7px);
 }
 .track .slider::after {
 	content: '';
 	width: 8px;
 	height: 8px;
-	border-top: 2px solid #000;
-	border-right: 2px solid #000;
+	border-top: 2px solid var(--arrow);
+	border-right: 2px solid var(--arrow);
 	display: block;
-	transform: rotateZ(45deg) translate3d(-34%, 32%, 0);
+	transform: translateX(-42.54%) rotateZ(45deg);
 	border-radius: 2px;
 }

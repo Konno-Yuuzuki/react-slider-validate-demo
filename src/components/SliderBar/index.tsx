@@ -81,7 +81,7 @@ const SliderBar: FC<Props> = memo(({ x, targetX, onDrag }) => {
 	 */
 	const handleValidate = useCallback(() => {
 		if (x) {
-			setValidated(Math.abs(targetX - x) <= 6);
+			setValidated(Math.abs(targetX - x) <= 3);
 		}
 	}, [x, targetX]);
 
@@ -131,6 +131,25 @@ const SliderBar: FC<Props> = memo(({ x, targetX, onDrag }) => {
 		setStartX(0);
 	}, []);
 
+	const sliderStyle = useCallback(() => {
+		if (sliderRef.current) {
+			if (validated) {
+				sliderRef.current.style.setProperty('--backgroundColor', 'green');
+				sliderRef.current.style.setProperty('--arrow', '#fff');
+			} else if (canMoved) {
+				sliderRef.current.style.setProperty('--backgroundColor', 'blue');
+				sliderRef.current.style.setProperty('--arrow', '#fff');
+			} else {
+				sliderRef.current.style.setProperty('--backgroundColor', '#fff');
+				sliderRef.current.style.setProperty('--arrow', '#000');
+			}
+		}
+	}, [validated, canMoved]);
+
+	useEffect(() => {
+		sliderStyle();
+	}, [sliderStyle]);
+
 	return (
 		<div
 			ref={trackRef}
@@ -138,12 +157,15 @@ const SliderBar: FC<Props> = memo(({ x, targetX, onDrag }) => {
 			onMouseMove={canMoved ? handleMouseMove : undefined}
 			onMouseUp={canMoved ? handleMouseUp : undefined}
 			onMouseLeave={canMoved ? handleMouseOut : undefined}
+			data-id='track'
 		>
 			<div
+				id='slider'
 				ref={sliderRef}
 				className={styles.slider}
 				style={transformStyle}
 				onMouseDown={handleMouseDown}
+				data-testid='slider'
 			/>
 		</div>
 	);

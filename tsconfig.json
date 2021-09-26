@@ -20,5 +20,5 @@
 		"declarationDir": "."
 	},
 	"include": ["src"],
-	"exclude": []
+	"exclude": ["node_modules", "tests"]
 }
